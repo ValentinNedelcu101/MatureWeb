@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Northwind.DataContext/Northwind.DataContext.csproj" />
+  <Project Path="Northwind.EntityModels/Northwind.EntityModels.csproj" />
+  <Project Path="Northwind.Mvc/Northwind.Mvc.csproj" Id="36bff611-3c4c-496e-af84-b2655ab4c088" />
+  <Project Path="Northwind.UnitTests/Northwind.UnitTests.csproj" Id="1147f823-c16d-4dd9-a4a5-fb6464e876bb" />
+</Solution>
