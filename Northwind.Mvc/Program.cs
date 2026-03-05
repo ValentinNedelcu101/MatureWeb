@@ -3,36 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Northwind.Mvc.Data;
 using Northwind.EntityModels;
 using Microsoft.Data.SqlClient;
-
+using Northwind.Mvc.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.AddIdentityDatabase();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
-string? sqlServerConnection = builder.Configuration
-    .GetConnectionString("NorthwindConnection");
 
-if (sqlServerConnection is null)
-{
-    WriteLine("Northwind database connection string is missing from configuration");
-}
-else
-{
-    SqlConnectionStringBuilder sql = new(sqlServerConnection);
-
-    sql.IntegratedSecurity = false;
-    sql.UserID = Environment.GetEnvironmentVariable("MY_SQL_USR");
-    sql.Password = Environment.GetEnvironmentVariable("MY_SQL_PWD");
-
-    builder.Services.AddNorthwindContext(sql.ConnectionString);
-}
-
+builder.AddNorthwindDatabase();
 
     var app = builder.Build();
 
